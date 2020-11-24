@@ -45,7 +45,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="NO results found for this query"
+        android:text="No results found for this query"
         android:visibility="gone"
         tools:visibility="visible" />
+
 </RelativeLayout>

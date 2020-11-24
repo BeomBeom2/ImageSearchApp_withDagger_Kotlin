@@ -17,12 +17,13 @@ object AppModule {
     @Singleton
     fun provideRetrofit(): Retrofit =
         Retrofit.Builder()
-            .baseUrl(UnsplashApi.BASE_URL)
+            .baseUrl(UnsplashApi.BASE_URL) //companion object in UnsplashApi.kt earlier
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
     @Provides
     @Singleton
-    fun provideUnsplashApi(retrofit : Retrofit): UnsplashApi =
+    fun provideUnsplashApi(retrofit: Retrofit): UnsplashApi =
         retrofit.create(UnsplashApi::class.java)
+
 }

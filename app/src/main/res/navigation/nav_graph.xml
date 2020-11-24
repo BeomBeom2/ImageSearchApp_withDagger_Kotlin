@@ -8,6 +8,6 @@
     <fragment
         android:id="@+id/galleryFragment"
         android:name="com.codinginflow.imagesearchapp.ui.gallery.GalleryFragment"
-        android:label="fragmant_gallery"
-        tools:layout="@layout/fragmant_gallery" />
+        android:label="fragment_gallery"
+        tools:layout="@layout/fragment_gallery" />
 </navigation>
