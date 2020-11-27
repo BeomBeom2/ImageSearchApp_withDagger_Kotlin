@@ -6,13 +6,12 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.DrawableTransformation
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.codinginflow.imagesearchapp.R
 import com.codinginflow.imagesearchapp.data.UnsplashPhoto
 import com.codinginflow.imagesearchapp.databinding.ItemUnsplashPhotoBinding
 
-class UnsplashPhotoAdapter :
+class UnsplashPhotoAdapter(private val listener: OnItemClickListener) :
     PagingDataAdapter<UnsplashPhoto, UnsplashPhotoAdapter.PhotoViewHolder>(PHOTO_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
@@ -30,8 +29,20 @@ class UnsplashPhotoAdapter :
         }
     }
 
-    class PhotoViewHolder(private val binding: ItemUnsplashPhotoBinding) :
+    inner class PhotoViewHolder(private val binding: ItemUnsplashPhotoBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.root.setOnClickListener {
+                val position = bindingAdapterPosition // which is property of the parent class
+                if(position != RecyclerView.NO_POSITION) { // (NO_POSITION = -1)
+                    val item = getItem(position)
+                    if (item != null) {
+                        listener.onItemClick(item)
+                    }
+                }
+            } // we don't want to handle right here, because we content navigation from inside adapter
+        }
 
         fun bind(photo: UnsplashPhoto) {
             binding.apply {
@@ -46,6 +57,10 @@ class UnsplashPhotoAdapter :
             }
         }
     }
+
+    interface OnItemClickListener {
+        fun onItemClick(photo: UnsplashPhoto) //our fragment late implement in the interface and then we can fast fragment in self over the constructor to the adapter and cal this method on it.
+    }                       // because our past fragment out the interface but then it tightly coupled adapter to the fragment and research interface we keep the adapter usable we can easily another fragment data we want to do
 
     companion object {
         private val PHOTO_COMPARATOR = object : DiffUtil.ItemCallback<UnsplashPhoto>() {
